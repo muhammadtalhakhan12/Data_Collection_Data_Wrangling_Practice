@@ -47,3 +47,36 @@ dbExecute(conn, "INSERT INTO cars_table VALUES
 dbGetQuery(conn,"select * from cars_table")
 
 dbGetQuery(conn,"select * from cars_table where car_names = 'Mazda RX4' ")
+
+### SQLite other functions ###
+
+### you can fetch all results ###
+dbSendQuery(conn,"select * from cars_table where cyl = 6")
+res <- dbSendQuery(conn,"select * from cars_table where cyl = 6")
+dbFetch(res)
+
+dbClearResult(res)
+
+
+res <- dbSendQuery(conn,"select * from cars_table where cyl = 6")
+while (!dbHasCompleted(res)) {
+     chunk <- dbFetch(res, n = 5)
+     print(nrow(chunk))
+}
+
+res     
+
+dbClearResult(res)
+
+res <- dbSendQuery(conn,"select * from cars_table where cyl = 8")
+while (!dbHasCompleted(res)) {
+     chunk <- dbFetch(res, n = 5)
+     print(nrow(chunk))
+}
+
+res     
+
+dbClearResult(res)
+
+dbDisconnect(conn)
+
